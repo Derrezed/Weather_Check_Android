@@ -1,0 +1,255 @@
+Screen:
+    NavigationLayout:
+        ScreenManager:
+            id: screen_manager
+            Screen:
+                name:"MainScreen"
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    MDToolbar:
+                        title: "Weather App"
+                        #md_bg_color: app.theme_cls.accent_color
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
+                    MDTabs:
+                        id: android_tabs
+                        on_tab_switch: app.on_tab_switch(*args)
+                        Tab:
+                            text:"Pogoda na dzisiaj"
+                            DailyWeather:
+                        Tab:
+                            text:"Pogoda na 5dni"
+                            FutureWeather:
+            Screen:
+                screen_manager: screen_manager
+                name:'Localization'
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    MDToolbar:
+                        title: "Zarzadzaj lokalizacjami"
+                        elevation: 10
+                        MDIconButton:
+                            icon:'keyboard-backspace'
+                            on_release:
+                                screen_manager.current = 'MainScreen'
+                    LocalizationManager:
+                        screen_manager: screen_manager
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+                id: content_drawer
+
+
+
+<ContentNavigationDrawer>:
+    orientation: "vertical"
+    padding: "8dp"
+    spacing: "8dp"
+
+    AnchorLayout:
+        anchor_x: "left"
+        size_hint_y: None
+        height: avatar.height
+
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "56dp", "56dp"
+            source: "data/logo/kivy-icon-256.png"
+
+    MDLabel:
+        text: "Weather App"
+        #color: 1,1,1,1
+        font_style: "Button"
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    MDLabel:
+        text: "Systemy Mobilne i Wbudowane "
+        color: 1,1,1,1
+        font_style: "Caption"
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    MDFillRoundFlatIconButton:
+        icon: "plus"
+        text: "Zarzadzaj lokalizacjami"
+        on_release:
+            root.nav_drawer.set_state("close")
+            root.screen_manager.current = 'Localization'
+
+<DailyWeather>:
+    #input : input
+    labeltemp :labeltemp
+    labeltemp_min :labeltemp_min
+    labeltemp_max :labeltemp_max
+    labelcityName :labelcityName
+    labelweather_description: labelweather_description
+    MDFloatLayout
+        Label:
+            pos_hint: {"x":0, "top":1.2}
+            id : labeltemp
+            #color: 0,0,0,1
+            text: root.temp
+            font_size: 48
+        Label:
+            pos_hint: {"x":0, "top":1.4}
+            id : labelcityName
+            text: root.cityName
+            font_size: 34
+        Label:
+            pos_hint: {"x":0, "top":1.3}
+            id : labeltoday
+            text: root.today
+            font_size: 24
+        Label:
+            pos_hint: {"x":-0.2, "top":1.1}
+            id : labeltemp_min
+            #color: 0,0,0,1
+            text: root.temp_min
+            font_size: 24
+        Label:
+            pos_hint: {"x":0.2, "top":1.1}
+            id : labeltemp_max
+            #color: 0,0,0,1
+            text: root.temp_max
+            font_size: 24
+        Label:
+            pos_hint: {"x":0, "top":1}
+            id : labelweather_description
+            #color: 0,0,0,1
+            text: root.weather_description
+            font_size: 24
+
+
+
+<FutureWeather>
+    label1day :label1day
+    label2day :label2day
+    label3day :label3day
+    label4day :label4day
+    label5day :label5day
+    label1day_data: label1day_data
+    label2day_data: label2day_data
+    label3day_data: label3day_data
+    label4day_data: label4day_data
+    label5day_data: label5day_data
+    label1day_weather: label1day_weather
+    label2day_weather: label2day_weather
+    label3day_weather: label3day_weather
+    label4day_weather: label4day_weather
+    label5day_weather: label5day_weather
+    MDFloatLayout:
+        Label:
+            pos_hint: {"x":0, "top":1.4}
+            id : label1day
+            #color: 0,0,0,1
+            text: root.temp1day
+        Label:
+            pos_hint: {"x":0.3, "top":1.4}
+            id : label1day_data
+            #color: 0,0,0,1
+            text: root.temp1day_data
+        Label:
+            pos_hint: {"x":-0.3, "top":1.4}
+            id : label1day_weather
+            #color: 0,0,0,1
+            text: root.temp1day_weather
+
+        Label:
+            pos_hint: {"x":0, "top":1.2}
+            id : label2day
+            #color: 0,0,0,1
+            text: root.temp2day
+        Label:
+            pos_hint: {"x":0.3, "top":1.2}
+            id : label2day_data
+            #color: 0,0,0,1
+            text: root.temp2day_data
+        Label:
+            pos_hint: {"x":-0.3, "top":1.2}
+            id : label2day_weather
+            #color: 0,0,0,1
+            text: root.temp2day_weather
+
+        Label:
+            pos_hint: {"x":0, "top":1}
+            id : label3day
+            #color: 0,0,0,1
+            text: root.temp3day
+        Label:
+            pos_hint: {"x":0.3, "top":1}
+            id : label3day_data
+            #color: 0,0,0,1
+            text: root.temp2day_data
+        Label:
+            pos_hint: {"x":-0.3, "top":1}
+            id : label3day_weather
+            #color: 0,0,0,1
+            text: root.temp3day_weather
+
+        Label:
+            pos_hint: {"x":0, "top":0.8}
+            id : label4day
+            #color: 0,0,0,1
+            text: root.temp4day
+        Label:
+            pos_hint: {"x":0.3, "top":0.8}
+            id : label4day_data
+            #color: 0,0,0,1
+            text: root.temp4day_data
+        Label:
+            pos_hint: {"x":-0.3, "top":0.8}
+            id : label4day_weather
+            #color: 0,0,0,1
+            text: root.temp4day_weather
+
+        Label:
+            pos_hint: {"x":0, "top":0.6}
+            id : label5day
+            #color: 0,0,0,1
+            text: root.temp5day
+        Label:
+            pos_hint: {"x":0.3, "top":0.6}
+            id : label5day_data
+            #color: 0,0,0,1
+            text: root.temp5day_data
+        Label:
+            pos_hint: {"x":-0.3, "top":0.6}
+            id : label5day_weather
+            #color: 0,0,0,1
+            text: root.temp5day_weather
+
+<LocalizationManager>:
+    input : input
+    actualcity2: actualcity2
+    MDFloatLayout:
+        MDLabel:
+            id: actualcity2
+            pos_hint: {"x":0, "top":1.4}
+            text:root.actualcity
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1
+
+        MDTextFieldRound:
+            normal_color: 0, 0, 0, 1
+            color_active: 1, 1, 1, 1
+            icon: "city"
+            pos_hint: {"x":0, "top":0.8}
+            id: input
+            hint_text: "Podaj miasto"
+        MDRoundFlatButton:
+
+            text_color: 0, 0, 0, 1
+            md_bg_color: 1, 1, 1, 1
+            pos_hint: {"x":0.35, "top":0.65}
+            text: "Zmien miasto"
+            on_press :
+                root.clicked()
+                root.screen_manager.current = 'MainScreen'
